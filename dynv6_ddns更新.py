@@ -4,10 +4,10 @@ import time
 import requests
 #you token
 # 你的token#
-you_token = ''
+you_token = '你的token'
 #you hostname
 # 你的域名
-you_hostname = ''
+you_hostname = '你的域名'
 # 获取ipv6地址
 def getIPv6Address():
     text = requests.get('https://v6.ident.me').text
