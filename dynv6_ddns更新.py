@@ -150,10 +150,10 @@ if __name__ == '__main__':
         while True:
             up_ipv6 = post_up_requests(your_domain, your_token)
             if up_ipv6:
-                logging.info("将在一小时后再次检查")
+                logging.info(f"{your_domain}记录更新成功！将在一小时后再次检查")
                 time.sleep(3600)
             else:
-                logging.info("将在一分钟后重试")
+                logging.info(f"{your_domain}更新失败！将在一分钟后重试")
                 time.sleep(300)
     finally:
         # 程序正常或异常退出时，都尝试删除锁文件
