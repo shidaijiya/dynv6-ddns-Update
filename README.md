@@ -1,5 +1,4 @@
-# ReadMe: Python Dynv6 IPv6 Address Updater (中英双语)
-
+# ReadMe: Python Dynv6 IPv6 Address Updater 
 ## 简介 / Overview
 该Python脚本用于自动更新Dynv6域名的IPv6地址。脚本会定期检查系统的当前IPv6地址，并与Dynv6 DNS记录进行对比，如果不同则更新DNS记录。
 
