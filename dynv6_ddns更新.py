@@ -12,6 +12,14 @@ import portalocker
 import psutil
 import requests
 
+
+
+# 你的token
+your_token = '你的token'
+# 你的域名
+your_domain = '你的域名'
+
+
 # 创建log目录
 os.makedirs("./log", exist_ok=True)
 # 获取当前时间的时间戳
@@ -58,8 +66,19 @@ def make_lock_file():
             try:
                 old_pid = int(lock_content)
                 if check_if_process_running(old_pid):
-                    print(f"另一个pid为:{old_pid}的实例正在运行，正在退出...")
-                    logging.info(f"另一个pid为:{old_pid}的实例正在运行，正在退出...")
+                    print(f"另一个pid为:{old_pid}的实例正在运行，正在执行单次更新...\n"
+                          f"[注意本次更新完其他实例会继续运行,本实例将会退出]")
+                    logging.info(f"另一个pid为:{old_pid}的实例正在运行，正在执行单次更新...\n"
+                          f"[注意本次更新完其他实例会继续运行,本实例将会退出]")
+
+                    while True:
+                        up_ipv6 = post_up_requests(your_domain, your_token)
+                        if up_ipv6:
+                            logging.info(f"{your_domain}单次记录更新成功！")
+                            break
+                        else:
+                            logging.error("单次更新失败1分钟后重试")
+                            time.sleep(60)
                     sys.exit(1)
                 else:
                     pass
@@ -139,13 +158,9 @@ def post_up_requests(hostname, token):
 
 
 if __name__ == '__main__':
-    # 你的token
-    your_token = '你的token'
-    # 你的域名
-    your_domain = '你的域名'
-
     # 生成锁文件
     lock_file_path = make_lock_file()
+
     try:
         while True:
             up_ipv6 = post_up_requests(your_domain, your_token)
